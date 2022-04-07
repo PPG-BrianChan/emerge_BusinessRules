@@ -1,0 +1,34 @@
+{
+    "welcomeFile": "/cp.portal",
+    "authenticationMethod": "route",
+    "logout": {
+        "logoutEndpoint": "/do/logout",
+        "logoutPage": "/"
+    },
+    "routes": [
+        {
+            "source": "^/webapp/resources/(.*)",
+            "target": "/resources/$1",
+            "authenticationType": "xsuaa",
+            "destination": "ui5"
+        },
+        {
+            "source": "^(.*)$",
+            "target": "/ppgemergeui/$1",
+            "service": "html5-apps-repo-rt",
+            "authenticationType": "xsuaa"
+        },
+        {
+            "source": "^(.*)$",
+            "target": "/ppgemergeuiairframer/$1",
+            "service": "html5-apps-repo-rt",
+            "authenticationType": "xsuaa"
+        },
+        {
+            "source": "^(.*)$",
+            "target": "/emergeuiregen/$1",
+            "service": "html5-apps-repo-rt",
+            "authenticationType": "xsuaa"
+        }
+    ]
+}

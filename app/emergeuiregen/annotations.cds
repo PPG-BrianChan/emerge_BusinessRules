@@ -1,0 +1,1 @@
+using EmergeService as service from '../../srv/EmergeService';

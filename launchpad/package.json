@@ -1,0 +1,13 @@
+{
+    "name": "launchpad",
+    "description": "Portal site content deployer package",
+    "engines": {
+      "node": "12.X"
+    },
+    "dependencies": {
+        "@sap/portal-cf-content-deployer": "4.12.0-20210201101230"
+    },
+    "scripts": {
+      "start": "node node_modules/@sap/portal-cf-content-deployer/src/index.js"
+    }
+  }

@@ -1,0 +1,659 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+        <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+    </edmx:Reference>
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="EmergeService" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityContainer Name="EntityContainer" m:IsDefaultEntityContainer="true">
+                <EntitySet Name="ProductSurvey" EntityType="EmergeService.ProductSurvey"/>
+                <EntitySet Name="AirframerList" EntityType="EmergeService.AirframerList"/>
+                <EntitySet Name="ProgramList" EntityType="EmergeService.ProgramList"/>
+                <EntitySet Name="ComponentList" EntityType="EmergeService.ComponentList"/>
+                <EntitySet Name="ProductType" EntityType="EmergeService.ProductType"/>
+                <EntitySet Name="AirframerHierarchy" EntityType="EmergeService.AirframerHierarchy"/>
+                <EntitySet Name="ProductType_texts" EntityType="EmergeService.ProductType_texts"/>
+                <AssociationSet Name="ProductSurvey_Airframer" Association="EmergeService.ProductSurvey_Airframer">
+                    <End Role="ProductSurvey" EntitySet="ProductSurvey"/>
+                    <End Role="AirframerList" EntitySet="AirframerList"/>
+                </AssociationSet>
+                <AssociationSet Name="ProductSurvey_Program" Association="EmergeService.ProductSurvey_Program">
+                    <End Role="ProductSurvey" EntitySet="ProductSurvey"/>
+                    <End Role="ProgramList" EntitySet="ProgramList"/>
+                </AssociationSet>
+                <AssociationSet Name="ProductSurvey_Component" Association="EmergeService.ProductSurvey_Component">
+                    <End Role="ProductSurvey" EntitySet="ProductSurvey"/>
+                    <End Role="ComponentList" EntitySet="ComponentList"/>
+                </AssociationSet>
+                <AssociationSet Name="ProductSurvey_ProductType" Association="EmergeService.ProductSurvey_ProductType">
+                    <End Role="ProductSurvey" EntitySet="ProductSurvey"/>
+                    <End Role="ProductType" EntitySet="ProductType"/>
+                </AssociationSet>
+                <AssociationSet Name="AirframerList_Parent" Association="EmergeService.AirframerList_Parent">
+                    <End Role="AirframerList" EntitySet="AirframerList"/>
+                    <End Role="AirframerHierarchy" EntitySet="AirframerHierarchy"/>
+                </AssociationSet>
+                <AssociationSet Name="ProgramList_Parent" Association="EmergeService.ProgramList_Parent">
+                    <End Role="ProgramList" EntitySet="ProgramList"/>
+                    <End Role="AirframerHierarchy" EntitySet="AirframerHierarchy"/>
+                </AssociationSet>
+                <AssociationSet Name="ComponentList_Parent" Association="EmergeService.ComponentList_Parent">
+                    <End Role="ComponentList" EntitySet="ComponentList"/>
+                    <End Role="AirframerHierarchy" EntitySet="AirframerHierarchy"/>
+                </AssociationSet>
+                <AssociationSet Name="ProductType_texts_1" Association="EmergeService.ProductType_texts_1">
+                    <End Role="ProductType" EntitySet="ProductType"/>
+                    <End Role="ProductType_texts" EntitySet="ProductType_texts"/>
+                </AssociationSet>
+                <AssociationSet Name="ProductType_localized" Association="EmergeService.ProductType_localized">
+                    <End Role="ProductType" EntitySet="ProductType"/>
+                    <End Role="ProductType_texts" EntitySet="ProductType_texts"/>
+                </AssociationSet>
+                <AssociationSet Name="AirframerHierarchy_Parent" Association="EmergeService.AirframerHierarchy_Parent">
+                    <End Role="AirframerHierarchy" EntitySet="AirframerHierarchy"/>
+                    <End Role="AirframerHierarchy1" EntitySet="AirframerHierarchy"/>
+                </AssociationSet>
+            </EntityContainer>
+            <EntityType Name="ProductSurvey">
+                <Key>
+                    <PropertyRef Name="ID"/>
+                </Key>
+                <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+                <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+                <Property Name="Customer" Type="Edm.String"/>
+                <Property Name="RepresentName" Type="Edm.String"/>
+                <Property Name="RepresentTitle" Type="Edm.String"/>
+                <NavigationProperty Name="Airframer" Relationship="EmergeService.ProductSurvey_Airframer" FromRole="ProductSurvey" ToRole="AirframerList"/>
+                <Property Name="Airframer_Id" Type="Edm.String"/>
+                <NavigationProperty Name="Program" Relationship="EmergeService.ProductSurvey_Program" FromRole="ProductSurvey" ToRole="ProgramList"/>
+                <Property Name="Program_Id" Type="Edm.String"/>
+                <NavigationProperty Name="Component" Relationship="EmergeService.ProductSurvey_Component" FromRole="ProductSurvey" ToRole="ComponentList"/>
+                <Property Name="Component_Id" Type="Edm.String"/>
+                <Property Name="Active" Type="Edm.Boolean"/>
+                <NavigationProperty Name="ProductType" Relationship="EmergeService.ProductSurvey_ProductType" FromRole="ProductSurvey" ToRole="ProductType"/>
+                <Property Name="ProductType_Id" Type="Edm.String"/>
+                <Property Name="Product" Type="Edm.String"/>
+                <Property Name="ProductKitsNumber" Type="Edm.Int32"/>
+                <Property Name="BusinessShare" Type="Edm.Int32"/>
+            </EntityType>
+            <EntityType Name="AirframerList">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.String" Nullable="false"/>
+                <Property Name="Name" Type="Edm.String"/>
+                <NavigationProperty Name="Parent" Relationship="EmergeService.AirframerList_Parent" FromRole="AirframerList" ToRole="AirframerHierarchy"/>
+                <Property Name="Parent_Id" Type="Edm.String"/>
+            </EntityType>
+            <EntityType Name="ProgramList">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.String" Nullable="false"/>
+                <Property Name="Name" Type="Edm.String"/>
+                <NavigationProperty Name="Parent" Relationship="EmergeService.ProgramList_Parent" FromRole="ProgramList" ToRole="AirframerHierarchy"/>
+                <Property Name="Parent_Id" Type="Edm.String"/>
+            </EntityType>
+            <EntityType Name="ComponentList">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.String" Nullable="false"/>
+                <Property Name="Name" Type="Edm.String"/>
+                <NavigationProperty Name="Parent" Relationship="EmergeService.ComponentList_Parent" FromRole="ComponentList" ToRole="AirframerHierarchy"/>
+                <Property Name="Parent_Id" Type="Edm.String"/>
+            </EntityType>
+            <EntityType Name="ProductType">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="Id" Type="Edm.String" Nullable="false"/>
+                <NavigationProperty Name="texts" Relationship="EmergeService.ProductType_texts_1" FromRole="ProductType" ToRole="ProductType_texts"/>
+                <NavigationProperty Name="localized" Relationship="EmergeService.ProductType_localized" FromRole="ProductType" ToRole="ProductType_texts"/>
+            </EntityType>
+            <EntityType Name="AirframerHierarchy">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.String" Nullable="false"/>
+                <Property Name="Name" Type="Edm.String"/>
+                <Property Name="Type" Type="Edm.String"/>
+                <NavigationProperty Name="Parent" Relationship="EmergeService.AirframerHierarchy_Parent" FromRole="AirframerHierarchy" ToRole="AirframerHierarchy1"/>
+                <Property Name="Parent_Id" Type="Edm.String"/>
+                <NavigationProperty Name="Children" Relationship="EmergeService.AirframerHierarchy_Parent" FromRole="AirframerHierarchy1" ToRole="AirframerHierarchy"/>
+            </EntityType>
+            <EntityType Name="ProductType_texts">
+                <Key>
+                    <PropertyRef Name="locale"/>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+                <Property Name="name" Type="Edm.String" MaxLength="255"/>
+                <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+                <Property Name="Id" Type="Edm.String" Nullable="false"/>
+            </EntityType>
+            <Association Name="ProductSurvey_Airframer">
+                <End Role="ProductSurvey" Type="EmergeService.ProductSurvey" Multiplicity="*"/>
+                <End Role="AirframerList" Type="EmergeService.AirframerList" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="AirframerList">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ProductSurvey">
+                        <PropertyRef Name="Airframer_Id"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ProductSurvey_Program">
+                <End Role="ProductSurvey" Type="EmergeService.ProductSurvey" Multiplicity="*"/>
+                <End Role="ProgramList" Type="EmergeService.ProgramList" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="ProgramList">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ProductSurvey">
+                        <PropertyRef Name="Program_Id"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ProductSurvey_Component">
+                <End Role="ProductSurvey" Type="EmergeService.ProductSurvey" Multiplicity="*"/>
+                <End Role="ComponentList" Type="EmergeService.ComponentList" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="ComponentList">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ProductSurvey">
+                        <PropertyRef Name="Component_Id"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ProductSurvey_ProductType">
+                <End Role="ProductSurvey" Type="EmergeService.ProductSurvey" Multiplicity="*"/>
+                <End Role="ProductType" Type="EmergeService.ProductType" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="ProductType">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ProductSurvey">
+                        <PropertyRef Name="ProductType_Id"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="AirframerList_Parent">
+                <End Role="AirframerList" Type="EmergeService.AirframerList" Multiplicity="*"/>
+                <End Role="AirframerHierarchy" Type="EmergeService.AirframerHierarchy" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="AirframerHierarchy">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="AirframerList">
+                        <PropertyRef Name="Parent_Id"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ProgramList_Parent">
+                <End Role="ProgramList" Type="EmergeService.ProgramList" Multiplicity="*"/>
+                <End Role="AirframerHierarchy" Type="EmergeService.AirframerHierarchy" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="AirframerHierarchy">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ProgramList">
+                        <PropertyRef Name="Parent_Id"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ComponentList_Parent">
+                <End Role="ComponentList" Type="EmergeService.ComponentList" Multiplicity="*"/>
+                <End Role="AirframerHierarchy" Type="EmergeService.AirframerHierarchy" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="AirframerHierarchy">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="ComponentList">
+                        <PropertyRef Name="Parent_Id"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="ProductType_texts_1">
+                <End Role="ProductType" Type="EmergeService.ProductType" Multiplicity="1">
+                    <OnDelete Action="Cascade"/>
+                </End>
+                <End Role="ProductType_texts" Type="EmergeService.ProductType_texts" Multiplicity="*"/>
+            </Association>
+            <Association Name="ProductType_localized">
+                <End Role="ProductType" Type="EmergeService.ProductType" Multiplicity="*"/>
+                <End Role="ProductType_texts" Type="EmergeService.ProductType_texts" Multiplicity="0..1"/>
+            </Association>
+            <Association Name="AirframerHierarchy_Parent">
+                <End Role="AirframerHierarchy" Type="EmergeService.AirframerHierarchy" Multiplicity="*"/>
+                <End Role="AirframerHierarchy1" Type="EmergeService.AirframerHierarchy" Multiplicity="0..1"/>
+                <ReferentialConstraint>
+                    <Principal Role="AirframerHierarchy1">
+                        <PropertyRef Name="Id"/>
+                    </Principal>
+                    <Dependent Role="AirframerHierarchy">
+                        <PropertyRef Name="Parent_Id"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Annotations Target="EmergeService.ProductSurvey" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Capabilities.InsertRestrictions">
+                    <Record Type="Capabilities.InsertRestrictionsType">
+                        <PropertyValue Property="Insertable" Bool="true"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.UpdateRestrictions">
+                    <Record Type="Capabilities.UpdateRestrictionsType">
+                        <PropertyValue Property="Updatable" Bool="true"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.DeleteRestrictions">
+                    <Record Type="Capabilities.DeleteRestrictionsType">
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.HeaderInfo">
+                    <Record Type="UI.HeaderInfoType">
+                        <PropertyValue Property="TypeName" String="Customer Product Survey"/>
+                        <PropertyValue Property="TypeNamePlural" String="Customer Product Survey"/>
+                        <PropertyValue Property="ImageUrl" String="https://icon-library.com/images/products-icon/products-icon-5.jpg"/>
+                        <PropertyValue Property="Title">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="RepresentName"/>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Description">
+                            <Record Type="UI.DataField">
+                                <PropertyValue Property="Value" Path="RepresentTitle"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.PresentationVariant">
+                    <Record Type="UI.PresentationVariantType">
+                        <PropertyValue Property="Text" String="Default"/>
+                        <PropertyValue Property="Visualizations">
+                            <Collection>
+                                <AnnotationPath>@UI.LineItem</AnnotationPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="SortOrder">
+                            <Collection>
+                                <Record Type="Common.SortOrderType">
+                                    <PropertyValue Property="Property" PropertyPath="Customer"/>
+                                    <PropertyValue Property="Descending" Bool="true"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>Customer</PropertyPath>
+                        <PropertyPath>Airframer_Id</PropertyPath>
+                        <PropertyPath>Program_Id</PropertyPath>
+                        <PropertyPath>Component_Id</PropertyPath>
+                        <PropertyPath>ProductType_Id</PropertyPath>
+                        <PropertyPath>createdAt</PropertyPath>
+                        <PropertyPath>createdBy</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.LineItem">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Customer"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="RepresentName"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="RepresentTitle"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Airframer_Id"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Program_Id"/>
+                        </Record>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="Component_Id"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.HeaderFacets">
+                    <Collection>
+                        <Record Type="UI.ReferenceFacet">
+                            <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ClientLinkCRM"/>
+                            <PropertyValue Property="Label" String="ClientLink CRM"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.Facets">
+                    <Collection>
+                        <Record Type="UI.CollectionFacet">
+                            <PropertyValue Property="ID" String="ObjectInformation"/>
+                            <PropertyValue Property="Label" String="Object Information"/>
+                            <PropertyValue Property="Facets">
+                                <Collection>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ObjectInformationFG"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                        <Record Type="UI.CollectionFacet">
+                            <PropertyValue Property="ID" String="AdminData"/>
+                            <PropertyValue Property="Label" String="Admin Data"/>
+                            <PropertyValue Property="Facets">
+                                <Collection>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#CreationDetailsFG"/>
+                                        <PropertyValue Property="Label" String="Creation Details"/>
+                                    </Record>
+                                    <Record Type="UI.ReferenceFacet">
+                                        <PropertyValue Property="Target" AnnotationPath="@UI.FieldGroup#ModificationDetailsFG"/>
+                                        <PropertyValue Property="Label" String="Modification Details"/>
+                                    </Record>
+                                </Collection>
+                            </PropertyValue>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="ClientLinkCRM">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Customer"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="RepresentName"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="RepresentTitle"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="ObjectInformationFG">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Airframer_Id"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Program_Id"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Component_Id"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Active"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="ProductType_Id"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="Product"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="ProductKitsNumber"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="BusinessShare"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="CreationDetailsFG">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="createdAt"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="createdBy"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.FieldGroup" Qualifier="ModificationDetailsFG">
+                    <Record Type="UI.FieldGroupType">
+                        <PropertyValue Property="Data">
+                            <Collection>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="modifiedAt"/>
+                                </Record>
+                                <Record Type="UI.DataField">
+                                    <PropertyValue Property="Value" Path="modifiedBy"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Common.Label" String="Customer Product Survey"/>
+            </Annotations>
+            <Annotations Target="EmergeService.EntityContainer/ProductSurvey" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Capabilities.InsertRestrictions">
+                    <Record Type="Capabilities.InsertRestrictionsType">
+                        <PropertyValue Property="Insertable" Bool="true"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.UpdateRestrictions">
+                    <Record Type="Capabilities.UpdateRestrictionsType">
+                        <PropertyValue Property="Updatable" Bool="true"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="Capabilities.DeleteRestrictions">
+                    <Record Type="Capabilities.DeleteRestrictionsType">
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="UI.PresentationVariant">
+                    <Record Type="UI.PresentationVariantType">
+                        <PropertyValue Property="Text" String="Default"/>
+                        <PropertyValue Property="Visualizations">
+                            <Collection>
+                                <AnnotationPath>@UI.LineItem</AnnotationPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="SortOrder">
+                            <Collection>
+                                <Record Type="Common.SortOrderType">
+                                    <PropertyValue Property="Property" PropertyPath="Customer"/>
+                                    <PropertyValue Property="Descending" Bool="true"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="EmergeService.ProductSurvey/ID" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProductSurvey/createdAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="Created On"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProductSurvey/createdBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Immutable" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="User's unique ID"/>
+                <Annotation Term="Common.Label" String="Created By"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProductSurvey/modifiedAt" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Common.Label" String="Changed On"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProductSurvey/modifiedBy" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.HiddenFilter" Bool="true"/>
+                <Annotation Term="Core.Computed" Bool="true"/>
+                <Annotation Term="Core.Description" String="User's unique ID"/>
+                <Annotation Term="Common.Label" String="Changed By"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProductSurvey/Customer" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.FieldControl" EnumMember="Common.FieldControlType/Mandatory"/>
+                <Annotation Term="Common.Label" String="Customer"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProductSurvey/RepresentName" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Customer Representative Name"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProductSurvey/RepresentTitle" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Representative Title"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProductSurvey/Airframer" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Airframer"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProductSurvey/Airframer_Id" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Text" Path="Airframer/Name">
+                    <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextFirst"/>
+                </Annotation>
+                <Annotation Term="Common.Label" String="Airframer"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProductSurvey/Program" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Program"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProductSurvey/Program_Id" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Text" Path="Program/Name">
+                    <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextFirst"/>
+                </Annotation>
+                <Annotation Term="Common.Label" String="Program"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProductSurvey/Component" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Component"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProductSurvey/Component_Id" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Text" Path="Component/Name">
+                    <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextFirst"/>
+                </Annotation>
+                <Annotation Term="Common.Label" String="Component"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProductSurvey/Active" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Is PPG currently active on this Component?"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProductSurvey/ProductType" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="PPG Product Type used on Component"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProductSurvey/ProductType_Id" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Text" Path="ProductType/name">
+                    <Annotation Term="UI.TextArrangement" EnumMember="UI.TextArrangementType/TextFirst"/>
+                </Annotation>
+                <Annotation Term="Common.Label" String="PPG Product Type used on Component"/>
+                <Annotation Term="Common.ValueList">
+                    <Record Type="Common.ValueListType">
+                        <PropertyValue Property="Label" String="PPG Product Type used on Component"/>
+                        <PropertyValue Property="CollectionPath" String="ProductType"/>
+                        <PropertyValue Property="Parameters">
+                            <Collection>
+                                <Record Type="Common.ValueListParameterInOut">
+                                    <PropertyValue Property="LocalDataProperty" PropertyPath="ProductType_Id"/>
+                                    <PropertyValue Property="ValueListProperty" String="Id"/>
+                                </Record>
+                                <Record Type="Common.ValueListParameterDisplayOnly">
+                                    <PropertyValue Property="ValueListProperty" String="name"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="EmergeService.ProductSurvey/Product" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="PPG Product"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProductSurvey/ProductKitsNumber" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Number of PPG Product Kits used on the Component"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProductSurvey/BusinessShare" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="% PPG Share of this Business"/>
+            </Annotations>
+            <Annotations Target="EmergeService.AirframerList/Id" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Airframer Id"/>
+            </Annotations>
+            <Annotations Target="EmergeService.AirframerList/Name" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Airframer Name"/>
+            </Annotations>
+            <Annotations Target="EmergeService.AirframerList/Parent" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="EmergeService.AirframerList/Parent_Id" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProgramList/Id" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Program Id"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProgramList/Name" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Program Name"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProgramList/Parent" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProgramList/Parent_Id" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ComponentList/Id" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Component Id"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ComponentList/Name" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Component Name"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ComponentList/Parent" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ComponentList/Parent_Id" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.Hidden" Bool="true"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProductType" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="UI.Identification">
+                    <Collection>
+                        <Record Type="UI.DataField">
+                            <PropertyValue Property="Value" Path="name"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="EmergeService.ProductType/name" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Type Name"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProductType/descr" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Description"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProductType/Id" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Type Id"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProductType_texts/name" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Type Name"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProductType_texts/descr" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Description"/>
+            </Annotations>
+            <Annotations Target="EmergeService.ProductType_texts/Id" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+                <Annotation Term="Common.Label" String="Type Id"/>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

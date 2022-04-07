@@ -1,0 +1,180 @@
+_schema-version: "3.1"
+ID: Emerge
+description: A simple CAP project.
+version: 1.0.0
+modules:
+- name: Emerge-srv
+  type: nodejs
+  path: gen/srv
+  requires:
+  - name: Emerge-db
+  - name: uaa_Emerge
+  - name: Emerge-dest-srv
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+- name: Emerge-db-deployer
+  type: hdb
+  path: gen/db
+  requires:
+  - name: Emerge-db
+  parameters:
+    buildpack: nodejs_buildpack
+- name: emerge-approuter
+  type: approuter.nodejs
+  path: emerge-approuter
+  requires:
+  - name: Emerge_html_repo_runtime
+  - name: uaa_Emerge
+  - name: Emerge-dest-srv
+    group: destinations
+    properties:
+      forwardAuthToken: false
+      name: ui5
+      url: https://ui5.sap.com
+  - name: srv-api
+    group: destinations
+    properties:
+      forwardAuthToken: true
+      name: srv-binding
+      strictSSL: true
+      url: ~{srv-url}
+  - name: portal_resources_ppg-Emerge
+  parameters:
+    disk-quota: 256M
+    memory: 256M
+- name: Emerge_ui_deployer
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: Emerge-repo-host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - ppgemergeui.zip
+      name: ppgemergeui
+      target-path: resources/
+    - artifacts:
+      - ppgemergeuiairframer.zip
+      name: ppgemergeuiairframer
+      target-path: resources/
+    - artifacts:
+      - emergeuiregen.zip
+      name: emergeuiregen
+      target-path: resources/
+- name: ppgemergeui
+  type: html5
+  path: app/ui
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: ppg-Emerge-launchpad
+  type: com.sap.application.content
+  path: launchpad
+  requires:
+  - name: portal_resources_ppg-Emerge
+    parameters:
+      content-target: true
+      service-key:
+        config:
+          content-endpoint: developer
+        name: content-deploy-key
+  - name: uaa_Emerge
+  - name: Emerge-repo-host
+  - name: Emerge_ui_deployer
+- name: ppgemergeuiairframer
+  type: html5
+  path: app/ui.airframer
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: emergeuiregen
+  type: html5
+  path: app/emergeuiregen
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: Emerge-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+  properties:
+    hdi-service-name: ${service-name}
+- name: Emerge-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: Emerge-html5-srv
+    service-plan: app-host
+- name: Emerge-dest-srv
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: false
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
+      version: 1.0.0
+    service: destination
+    service-name: Emerge-dest-srv
+    service-plan: lite
+- name: portal_resources_ppg-Emerge
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: portal
+    service-plan: standard
+- name: Emerge_html_repo_runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+- name: uaa_Emerge
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      role-collections:
+      - description: Emerge - Key Business User
+        name: Emerge-KBU-${space}
+        role-template-references:
+        - $XSAPPNAME.Emerge_KBU
+      tenant-mode: dedicated
+      xsappname: ppg-emerge-${space}
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: Emerge-xsuaa-service
+    service-plan: application
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm install --production
+    - npx -p @sap/cds-dk cds build --production

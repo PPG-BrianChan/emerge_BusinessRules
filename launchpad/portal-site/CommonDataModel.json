@@ -1,0 +1,93 @@
+{
+	"_version": "3.0.0",
+	"identification": {
+		"id": "c169ce83-2eea-4138-a69a-44e2f86bc3f4",
+		"entityType": "bundle"
+	},
+	"payload": {
+		"catalogs": [{
+			"_version": "3.0.0",
+			"identification": {
+				"id": "defaultCatalogId",
+				"title": "{{title}}",
+				"entityType": "catalog",
+				"i18n": "i18n/defaultCatalogId.properties"
+			},
+			"payload": {
+				"viz": []
+			}
+		}],
+		"groups": [{
+			"_version": "3.0.0",
+			"identification": {
+				"id": "defaultGroupId",
+				"title": "{{title}}",
+				"entityType": "group",
+				"i18n": "i18n/defaultGroupId.properties"
+			},
+			"payload": {
+				"viz": [{
+					"id": "ppg.emerge.ui-0-1631699539905",
+					"appId": "ppg.emerge.ui",
+					"vizId": "ProductSurvey-manage"
+				}, {
+					"id": "ppg.emerge.ui-1-1631717036837",
+					"appId": "ppg.emerge.ui",
+					"vizId": "ProductSurvey-create"
+				}, {
+					"id": "emergeuiregen-2-1649314281124",
+					"appId": "emergeuiregen",
+					"vizId": "emregprodsurvey-manage"
+				}]
+			}
+		}, {
+			"_version": "3.0.0",
+			"identification": {
+				"id": "airframer",
+				"title": "{{title}}",
+				"entityType": "group",
+				"i18n": "i18n/airframer.properties"
+			},
+			"payload": {
+				"viz": [{
+					"id": "ppg.emerge.ui.airframer-0-1633001404072",
+					"appId": "ppg.emerge.ui.airframer",
+					"vizId": "Airframer-manage"
+				}]
+			}
+		}],
+		"sites": [{
+			"_version": "3.0.0",
+			"identification": {
+				"id": "e4a4d1f0-57ce-421c-be4f-f6d450de5ff2",
+				"entityType": "site",
+				"title": "SAP Fiori launchpad site on Cloud Foundry",
+				"description": "SAP Fiori launchpad site on Cloud Foundry, deployed from WING"
+			},
+			"payload": {
+				"config": {
+					"ushellConfig": {
+						"renderers": {
+							"fiori2": {
+								"componentData": {
+									"config": {
+										"applications": {
+											"Shell-home": {}
+										}
+									}
+								}
+							}
+						}
+					}
+				},
+				"groupsOrder": ["defaultGroupId", "airframer"],
+				"sap.cloud.portal": {
+					"config": {
+						"theme.id": "sap_fiori_3",
+						"theme.active": ["sap_fiori_3", "sap_fiori_3_dark", "sap_belize_hcb", "sap_belize_hcw"]
+					}
+				}
+			}
+		}]
+	}
+}
