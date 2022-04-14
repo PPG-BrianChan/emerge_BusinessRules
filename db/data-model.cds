@@ -54,12 +54,12 @@ entity Airframer{
 
 entity Program{
     key Id : String;
+    Name : String;
     airframer_Id : String;
-    Name : String
 }
 
 entity Component{
     key Id : String;
+    Name : String;
     program_Id : String;
-    Name : String
 }

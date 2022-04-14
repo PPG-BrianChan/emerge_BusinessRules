@@ -35,9 +35,13 @@ annotate dm.ProductSurvey {
                 ValueListProperty : 'Name'
             },
             {
+                $Type             : 'Common.ValueListParameterFilterOnly',
+                ValueListProperty : 'airframer_Id',
+            },
+            {
                 $Type             : 'Common.ValueListParameterIn',
-                LocalDataProperty : Airframer_Id,
-                ValueListProperty : 'to_Airframer_Id',
+                LocalDataProperty : Airframer_Id, //points to main entity element
+                ValueListProperty : 'airframer_Id', //points to elements within the value help
             },
         ],
         SearchSupported : true,
@@ -56,9 +60,13 @@ annotate dm.ProductSurvey {
                 ValueListProperty : 'Name'
             },
             {
+                $Type             : 'Common.ValueListParameterFilterOnly',
+                ValueListProperty : 'program_Id',
+            },
+            {
                 $Type             : 'Common.ValueListParameterIn',
                 LocalDataProperty : Program_Id,
-                ValueListProperty : 'to_Program_Id',
+                ValueListProperty : 'program_Id',
             },
         ],
         SearchSupported : true,

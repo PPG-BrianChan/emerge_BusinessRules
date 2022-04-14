@@ -4,6 +4,8 @@ using EmergeService as em from '../srv/EmergeService';
 // annotatios that control the fiori layout
 //
 
+annotate em.ProductSurvey with @odata.draft.enabled : true;
+
 annotate em.ProductSurvey with {
     Customer          @Search.defaultSearchElement : true;
     RepresentName     @Search.defaultSearchElement : true;

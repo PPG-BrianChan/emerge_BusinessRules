@@ -15,6 +15,12 @@
       "destination": "ui5"
     },
     {
+        "source": "^/emerge/(.*)$",
+        "target": "/emerge/$1",
+        "authenticationType": "none",
+        "destination": "srv-binding"
+      },
+    {
       "source": "^(.*)$",
       "target": "$1",
       "service": "html5-apps-repo-rt",
